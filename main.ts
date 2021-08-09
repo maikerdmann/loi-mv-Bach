@@ -55,4 +55,9 @@ namespace LOI_MV {
             pins.analogWritePin(AnalogPin.P2, 0)
         }
     }
+
+    export function HelligkeitRechts(): number {
+        return pins.digitalReadPin(DigitalPin.P7)
+    }
+
 }
