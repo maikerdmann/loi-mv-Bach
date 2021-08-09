@@ -16,7 +16,7 @@ namespace LOI_MV {
      * -10 ist links, 0 gerade aus und 10 rechts
      */
     //% blockId=loimvAntrieb
-    //% block="antrieb power lenkung"
+    //% block="antrieb power"
     //% power.min=-10 power.max=10
     //% lenkung.min=-10 lenkung.max=10
     export function antrieb(power: number, lenkung: number): void {
