@@ -55,8 +55,12 @@ namespace LOI_MV {
             pins.analogWritePin(AnalogPin.P2, 0)
         }
     }
-
-    export function HelligkeitRechts(): number {
+    /**
+     * Gibt des Wert des rechten Helligkeitssensors aus
+     */
+    //% blockId=loimvHelligkeitRechts
+    //% block="helligkeitRechts"
+    export function helligkeitRechts(): number {
         return pins.digitalReadPin(DigitalPin.P7)
     }
 
