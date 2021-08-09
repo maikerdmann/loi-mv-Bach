@@ -64,4 +64,12 @@ namespace LOI_MV {
         return pins.digitalReadPin(DigitalPin.P7)
     }
 
+    /**
+     * Gibt des Wert des linken Helligkeitssensors aus
+     */
+    //% blockId=loimvHelligkeitLinks
+    //% block="helligkeitLinks"
+    export function helligkeitLinks(): number {
+        return pins.digitalReadPin(DigitalPin.P6)
+    }
 }
