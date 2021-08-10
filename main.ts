@@ -109,11 +109,13 @@ namespace LOI_MV {
      * Fährt den Roboter korrekt hoch
      */
     //% blockId=loimvInit
-    //% block="init"
-    export function init(): void {
+    //% block="init %kompass"
+    export function init(kompass: boolean): void {
         let strip = neopixel.create(DigitalPin.P16, 8, NeoPixelMode.RGB)
         strip.showColor(neopixel.colors(NeoPixelColors.Red))
-        basic.pause(input.compassHeading())
+        if (kompass){
+            basic.pause(input.compassHeading())
+        }        
         I2C_LCD1602.LcdInit(0)
         antrieb(0, 0)
         I2C_LCD1602.ShowString("Landesolympiade", 0, 0)
