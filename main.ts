@@ -79,8 +79,10 @@ namespace LOI_MV {
      * Dreht den Roboter um einen Winkel
      */
     //% blockId=loimvGraddrehung
-    //% block="Graddrehung"
-    function graddrehung(drehung: number, toleranz: number) {
+    //% block="Graddrehung %drehung %toleranz"
+    //% drehung.min=-180 drehung.max=180
+    //%toleranz.min=5 toleranz.max=20
+    export function graddrehung(drehung: number, toleranz: number) {
         antrieb(0, 0)
         let zielrichtung = (input.compassHeading() + drehung) % 360
         let i = 0
