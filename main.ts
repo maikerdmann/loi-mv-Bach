@@ -80,11 +80,11 @@ namespace LOI_MV {
      */
     //% blockId=loimvGraddrehung
     //% block="Graddrehung"
-    function Graddrehung(Drehung: number, Toleranz: number) {
+    function graddrehung(drehung: number, toleranz: number) {
         antrieb(0, 0)
-        let zielrichtung = (input.compassHeading() + Drehung) % 360
+        let zielrichtung = (input.compassHeading() + drehung) % 360
         let i = 0
-        while (Math.abs(zielrichtung - input.compassHeading()) > Toleranz && i < 50) {
+        while (Math.abs(zielrichtung - input.compassHeading()) > toleranz && i < 50) {
             i += 1
             if ((zielrichtung - input.compassHeading()) % 360 > 180) {
                 antrieb(6, 10)
@@ -102,5 +102,7 @@ namespace LOI_MV {
             return 0
         }
     }
+
+
 
 }
