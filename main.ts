@@ -89,13 +89,13 @@ namespace LOI_MV {
         while (Math.abs(zielrichtung - input.compassHeading()) > toleranz && i < 50) {
             i += 1
             if ((zielrichtung - input.compassHeading()) % 360 > 180) {
-                antrieb(10, 10)
+                antrieb(8, 10)
             } else {
-                antrieb(10, -10)
+                antrieb(8, -10)
             }
             basic.pause(100)
             antrieb(0, 0)
-            basic.pause(100)
+            basic.pause(200)
         }
         antrieb(0, 0)
         //if (i == 50) {
