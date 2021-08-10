@@ -74,4 +74,33 @@ namespace LOI_MV {
     export function helligkeitLinks(): number {
         return pins.digitalReadPin(DigitalPin.P6)
     }
+
+    /**
+     * Dreht den Roboter um einen Winkel
+     */
+    //% blockId=loimvGraddrehung
+    //% block="Graddrehung"
+    function Graddrehung(Drehung: number, Toleranz: number) {
+        antrieb(0, 0)
+        let zielrichtung = (input.compassHeading() + Drehung) % 360
+        let i = 0
+        while (Math.abs(zielrichtung - input.compassHeading()) > Toleranz && i < 50) {
+            i += 1
+            if ((zielrichtung - input.compassHeading()) % 360 > 180) {
+                antrieb(6, 10)
+            } else {
+                antrieb(6, -10)
+            }
+            basic.pause(100)
+            antrieb(0, 0)
+            basic.pause(100)
+        }
+        antrieb(0, 0)
+        if (i == 50) {
+            return 1
+        } else {
+            return 0
+        }
+    }
+
 }
