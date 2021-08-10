@@ -28,7 +28,7 @@ namespace LOI_MV {
             speedL = power + 2 * power / 10 * lenkung
         } else if (lenkung > 0) {
             speedL = power
-            speedR = power + 2 * power / 10 * lenkung
+            speedR = power - 2 * power / 10 * lenkung
         } else {
             speedL = speedR = power
         }
