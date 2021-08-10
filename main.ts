@@ -82,27 +82,43 @@ namespace LOI_MV {
     //% block="Graddrehung %drehung %toleranz"
     //% drehung.min=-180 drehung.max=180
     //%toleranz.min=5 toleranz.max=20
-    export function graddrehung(drehung: number, toleranz: number) {
+    export function graddrehung(drehung: number, toleranz: number): void {
         antrieb(0, 0)
         let zielrichtung = (input.compassHeading() + drehung) % 360
         let i = 0
         while (Math.abs(zielrichtung - input.compassHeading()) > toleranz && i < 50) {
             i += 1
             if ((zielrichtung - input.compassHeading()) % 360 > 180) {
-                antrieb(6, 10)
+                antrieb(10, 10)
             } else {
-                antrieb(6, -10)
+                antrieb(10, -10)
             }
             basic.pause(100)
             antrieb(0, 0)
             basic.pause(100)
         }
         antrieb(0, 0)
-        if (i == 50) {
-            return 1
-        } else {
-            return 0
-        }
+        //if (i == 50) {
+        //    return 1
+        //} else {
+        //    return 0
+        //}
+    }
+    
+    /**
+     * Fährt den Roboter korrekt hoch
+     */
+    //% blockId=loimvInit
+    //% block="init"
+    export function init(): void {
+        let strip = neopixel.create(DigitalPin.P16, 8, NeoPixelMode.RGB)
+        strip.showColor(neopixel.colors(NeoPixelColors.Red))
+        basic.pause(input.compassHeading())
+        I2C_LCD1602.LcdInit(0)
+        antrieb(0, 0)
+        I2C_LCD1602.ShowString("Landesolympiade", 0, 0)
+        I2C_LCD1602.ShowString("Informatik MV", 1, 1)
+        basic.pause(300)
     }
 
 
