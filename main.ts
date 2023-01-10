@@ -125,13 +125,13 @@ namespace LOI_MV {
         I2C_LCD1602.ShowString("Informatik MV", 1, 1)
         basic.pause(300)
         control.inBackground(
-            LOI_MV.antrieb(10, 0)
+            antrieb(10, 0)
             basic.pause(1000)
-            LOI_MV.antrieb(0, 0)
+            antrieb(0, 0)
             basic.pause(10)
-            LOI_MV.antrieb(10, 0)
+            antrieb(10, 0)
             basic.pause(1000)
-            LOI_MV.antrieb(0, 0)
+            antrieb(0, 0)
             basic.pause(10)
         )
     }
