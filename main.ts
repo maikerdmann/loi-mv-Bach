@@ -1,7 +1,7 @@
 namespace LOI_MV {
     
-    let ultra_values: number[] = []
-    let ultra_values_w0: number[] = []
+    export let ultra_values: number[] = []
+    export let ultra_values_w0: number[] = []
     
     
     /**
