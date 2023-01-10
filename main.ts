@@ -25,17 +25,17 @@ namespace LOI_MV {
     }
     
     export function ultraschall_wma(): number {
-        let num = ultra_ma_values[0]
+        let num = ultra_wma_values[0]
         return num
     }
     
     export function ultraschall_ewma(): number {
-        let num = ultra_ma_values[0]
+        let num = ultra_ewma_values[0]
         return num
     }
     
     export function ultraschall_kalman(): number {
-        let num = ultra_ma_values[0]
+        let num = ultra_kalman_values[0]
         return num
     }
     
