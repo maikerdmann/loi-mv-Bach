@@ -16,7 +16,11 @@ namespace LOI_MV {
     }
     
     
-    
+    /**
+     * initiert den ultraschall
+     */
+    //% blockId=loimvUltrainit
+    //% block="ultrainit"
     export function ultraschall_init() {
         control.inBackground(function () {
             while (true) {
