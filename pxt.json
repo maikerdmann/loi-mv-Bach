@@ -12,6 +12,7 @@
     },
     "files": [
         "main.ts",
+        "filter.ts",
         "README.md"
     ],
     "testFiles": [
