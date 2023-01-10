@@ -124,16 +124,6 @@ namespace LOI_MV {
         I2C_LCD1602.ShowString("Landesolympiade", 0, 0)
         I2C_LCD1602.ShowString("Informatik MV", 1, 1)
         basic.pause(300)
-        control.inBackground(
-            antrieb(10, 0)
-            basic.pause(1000)
-            antrieb(0, 0)
-            basic.pause(10)
-            antrieb(10, 0)
-            basic.pause(1000)
-            antrieb(0, 0)
-            basic.pause(10)
-        )
     }
 
 
