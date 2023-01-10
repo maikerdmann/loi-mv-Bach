@@ -2,7 +2,7 @@
 
 namespace LOI_MV {
     
-    const ultra_values = [];
+    const ultra_values = []: number;
     
     
     /**
