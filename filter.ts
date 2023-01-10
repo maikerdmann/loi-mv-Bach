@@ -1,9 +1,9 @@
 namespace LOI_MV{
 	
-	let ultra_ma_values: number[] = []
-	let ultra_wma_values: number[] = []
-	let ultra_ewma_values: number[] = []
-	let ultra_kalman_values: number[] = []
+	export let ultra_ma_values: number[] = []
+	export let ultra_wma_values: number[] = []
+	export let ultra_ewma_values: number[] = []
+	export let ultra_kalman_values: number[] = []
 	
 	
 	function moving_average(value:number){
