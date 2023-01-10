@@ -1,4 +1,4 @@
-namespace LOI_MV {
+namespace LOI_MV{
 	
 	let ultra_ma_values: number[] = []
 	let ultra_wma_values: number[] = []
@@ -6,7 +6,7 @@ namespace LOI_MV {
 	let ultra_kalman_values: number[] = []
 	
 	
-	export function moving_average(value:number){
+	function moving_average(value:number){
 		if (ultra_values.length < 5){
 			return ultra_values[0]
 		}
@@ -16,7 +16,7 @@ namespace LOI_MV {
 		return window_average
 	}
 	
-	export function weighted_moving_average(value:number){
+	function weighted_moving_average(value:number){
 		if (ultra_values.length < 5){
 			return ultra_values[0]
 		}
@@ -34,7 +34,7 @@ namespace LOI_MV {
 		return window_weighted_average
 	}
 	
-	export function exponential_weighted_moving_average(value:number, alpha:number){
+	function exponential_weighted_moving_average(value:number, alpha:number){
 		if (ultra_values.length < 5){
 			return ultra_values[0]
 		}
