@@ -1,16 +1,32 @@
 
 
 namespace LOI_MV {
+    
+    const ultra_values = [];
+    
+    
     /**
      * Test-Funktion
      */
     //% blockId=loimvUltraschall
     //% block="ultraschall"
     export function ultraschall(): number {
-        
-        
-        
-        return sonar.ping(DigitalPin.P8, DigitalPin.P9, PingUnit.Centimeters)
+        //sonar.ping(DigitalPin.P8, DigitalPin.P9, PingUnit.Centimeters)
+        return ultra_values[0]
+    }
+    
+    
+    
+    export function ultraschall_init() {
+        control.inBackground(function () {
+            while (true) {
+                let value = sonar.ping(DigitalPin.P8, DigitalPin.P9, PingUnit.Centimeters)
+                let length = ultra_values.unshift(value)
+                if length > 10{
+                    ultra_values.pop()
+                }
+            }
+        })
     }
     /**
      * Steuert die Antriebsmotoren mit den Parametern "Power" und "Lenkung".
