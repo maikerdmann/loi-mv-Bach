@@ -1,8 +1,7 @@
-
-
 namespace LOI_MV {
     
-    const ultra_values = []: number;
+    let ultra_values: number[] = []
+    let ultra_values_w0: number[] = []
     
     
     /**
@@ -11,8 +10,33 @@ namespace LOI_MV {
     //% blockId=loimvUltraschall
     //% block="ultraschall"
     export function ultraschall(): number {
-        //sonar.ping(DigitalPin.P8, DigitalPin.P9, PingUnit.Centimeters)
-        return ultra_values[0]
+        let num = ultra_values[0]
+        return num
+    }
+    
+    export function ultraschall_w0(): number {
+        let num = ultra_values_w0[0]
+        return num
+    }
+    
+    export function ultraschall_ma(): number {
+        let num = ultra_ma_values[0]
+        return num
+    }
+    
+    export function ultraschall_wma(): number {
+        let num = ultra_ma_values[0]
+        return num
+    }
+    
+    export function ultraschall_ewma(): number {
+        let num = ultra_ma_values[0]
+        return num
+    }
+    
+    export function ultraschall_kalman(): number {
+        let num = ultra_ma_values[0]
+        return num
     }
     
     
