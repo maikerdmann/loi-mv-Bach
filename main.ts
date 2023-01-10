@@ -26,7 +26,7 @@ namespace LOI_MV {
             while (true) {
                 let value = sonar.ping(DigitalPin.P8, DigitalPin.P9, PingUnit.Centimeters)
                 let length = ultra_values.unshift(value)
-                if length > 10{
+                if (length > 10){
                     ultra_values.pop()
                 }
             }
