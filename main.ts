@@ -7,6 +7,9 @@ namespace LOI_MV {
     //% blockId=loimvUltraschall
     //% block="ultraschall"
     export function ultraschall(): number {
+        
+        
+        
         return sonar.ping(DigitalPin.P8, DigitalPin.P9, PingUnit.Centimeters)
     }
     /**
@@ -121,6 +124,16 @@ namespace LOI_MV {
         I2C_LCD1602.ShowString("Landesolympiade", 0, 0)
         I2C_LCD1602.ShowString("Informatik MV", 1, 1)
         basic.pause(300)
+        control.inBackground(
+            LOI_MV.antrieb(10, 0)
+            basic.pause(1000)
+            LOI_MV.antrieb(0, 0)
+            basic.pause(10)
+            LOI_MV.antrieb(10, 0)
+            basic.pause(1000)
+            LOI_MV.antrieb(0, 0)
+            basic.pause(10)
+        )
     }
 
 
