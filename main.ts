@@ -123,7 +123,7 @@ namespace LOI_MV {
         I2C_LCD1602.ShowString("Informatik MV", 1, 1)
         basic.pause(300)
         
-        ultraschall_obj = new Ultraschall.Ultraschallsensor("MA")
+        ultraschall_obj = new Sensoren.Ultraschallsensor("MA")
         
         control.runInBackground(function(){
             while (true){
