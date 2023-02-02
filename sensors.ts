@@ -14,9 +14,9 @@ namespace Sensoren{
                 case 'WMA':
                     this.filter = new Filter.WMA(10)
                 case 'EWMA':
-                    this.filter = new Filter.EWMA(10)
+                    this.filter = new Filter.EWMA(10,0.5)
                 case 'LMS':
-                    this.filter = new Filter.LMS(10)
+                    this.filter = new Filter.LMS(10,0.001)
                 case 'NLMS':
                     this.filter = new Filter.WMA(10)
                 case 'KALMAN':
