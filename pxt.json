@@ -13,6 +13,7 @@
     "files": [
         "main.ts",
         "filter.ts",
+        "sensors.ts",
         "README.md"
     ],
     "testFiles": [

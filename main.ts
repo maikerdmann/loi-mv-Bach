@@ -1,43 +1,5 @@
 namespace LOI_MV {
     
-    export let ultra_values: number[] = []
-    export let ultra_values_w0: number[] = []
-    
-    
-    /**
-     * Test-Funktion
-     */
-    //% blockId=loimvUltraschall
-    //% block="ultraschall"
-    export function ultraschall(): number {
-        let num = ultra_values[0]
-        return num
-    }
-    
-    export function ultraschall_w0(): number {
-        let num = ultra_values_w0[0]
-        return num
-    }
-    
-    export function ultraschall_ma(): number {
-        let num = ultra_ma_values[0]
-        return num
-    }
-    
-    export function ultraschall_wma(): number {
-        let num = ultra_wma_values[0]
-        return num
-    }
-    
-    export function ultraschall_ewma(): number {
-        let num = ultra_ewma_values[0]
-        return num
-    }
-    
-    export function ultraschall_kalman(): number {
-        let num = ultra_kalman_values[0]
-        return num
-    }
     
     
     /**
@@ -168,6 +130,10 @@ namespace LOI_MV {
         I2C_LCD1602.ShowString("Landesolympiade", 0, 0)
         I2C_LCD1602.ShowString("Informatik MV", 1, 1)
         basic.pause(300)
+        
+        
+        
+        
         control.inBackground(function () {
             antrieb(10, 0),
             basic.pause(1000),
