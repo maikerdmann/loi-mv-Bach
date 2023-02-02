@@ -128,6 +128,87 @@ namespace Filter {
 		}
 	}
 	
+	export class NLMS extends BaseFilter{
+		mu: number;
+		h: Array<number>;
+		
+		constructor(windowsize: number) {
+			super(windowsize);
+			this.mu = 1
+			this.h = [4,5]
+		}
+		
+		add_measurment(measurement: number) {
+			this.current_value = this.calculate(measurement)
+			
+			let length = this.window.unshift(measurement)
+			if (length > this.windowsize) {
+				this.window.pop()
+			}
+		}
+		
+		calculate_with(measurement: number){
+			if (this.window.length < this.windowsize) {
+				return this.window[0]
+			}
+			
+			let input = this.window
+			let xhatn = matdot(this.h, input)
+			let en = measurement - xhatn
+			
+			let temp1 = mattimesnum(input, en)
+			let temp2 = mattimesnum(temp1, this.mu)
+			
+			this.h = matadd(temp2, this.h)
+			
+			if (this.window.length < 8) {
+				return measurement
+			}
+			
+			return xhatn
+		}
+	}
+	
+	export class Kalman extends BaseFilter{
+		mu: number;
+		h: Array<number>;
+		
+		constructor(windowsize: number) {
+			super(windowsize);
+			this.h = [4,5]
+		}
+		
+		add_measurment(measurement: number) {
+			this.current_value = this.calculate(measurement)
+			
+			let length = this.window.unshift(measurement)
+			if (length > this.windowsize) {
+				this.window.pop()
+			}
+		}
+		
+		calculate_with(measurement: number){
+			if (this.window.length < this.windowsize) {
+				return this.window[0]
+			}
+			
+			let input = this.window
+			let xhatn = matdot(this.h, input)
+			let en = measurement - xhatn
+			
+			let temp1 = mattimesnum(input, en)
+			let temp2 = mattimesnum(temp1, this.mu)
+			
+			this.h = matadd(temp2, this.h)
+			
+			if (this.window.length < 8) {
+				return measurement
+			}
+			
+			return xhatn
+		}
+	}
+	
 	function average(array: number[]) {
 		const sum = array.reduce((a, b) => a + b, 0)
 		const avg = (sum / array.length) || 0
