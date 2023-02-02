@@ -1,22 +1,14 @@
 namespace LOI_MV {
     
-    
+    let ultraschall_obj: any;
     
     /**
      * initiert den ultraschall
      */
-    //% blockId=loimvUltrainit
-    //% block="ultrainit"
-    export function ultraschall_init() {
-        control.inBackground(function () {
-            while (true) {
-                let value = sonar.ping(DigitalPin.P8, DigitalPin.P9, PingUnit.Centimeters)
-                let length = ultra_values.unshift(value)
-                if (length > 10){
-                    ultra_values.pop()
-                }
-            }
-        })
+    //% blockId=loimvUltra
+    //% block="ultra"
+    export function ultraschall() {
+        ultraschall_obj.get_entfernung()
     }
     /**
      * Steuert die Antriebsmotoren mit den Parametern "Power" und "Lenkung".
@@ -131,21 +123,13 @@ namespace LOI_MV {
         I2C_LCD1602.ShowString("Informatik MV", 1, 1)
         basic.pause(300)
         
+        ultraschall_obj = new Ultraschall.Ultraschallsensor("MA")
         
-        
-        
-        control.inBackground(function () {
-            antrieb(10, 0),
-            basic.pause(1000),
-            antrieb(0, 0),
-            basic.pause(10),
-            antrieb(10, 0),
-            basic.pause(1000),
-            antrieb(0, 0),
-            basic.pause(10)
+        control.runInBackground(function(){
+            while (true){
+                ultraschall.init()
+                basic.showIcon(IconNames.Heart)
+            }
         })
     }
-
-
-
 }
