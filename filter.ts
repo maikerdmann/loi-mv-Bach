@@ -11,13 +11,13 @@ namespace Filter {
 		
 		add_measurment(measurement: number){
 			let length = this.window.unshift(measurement)
-			if (length > 10) {
+			if (length > this.windowsize) {
 				this.window.pop()
 			}
-			this.current_value = this.calculate(measurement)
 		}
 		
 		calculate(measurement:number): number {
+			add_measurement(measurement)
 			return 0
 		}
 	}
@@ -28,6 +28,8 @@ namespace Filter {
 		}
 		
 		calculate(measurement: number) {
+			add_measurement(measurement)
+			
 			if (this.window.length < this.windowsize) {
 				return this.window[0]
 			}
@@ -43,20 +45,23 @@ namespace Filter {
 		}
 		
 		calculate(measurement: number) {
+			add_measurement(measurement)
+			
 			if (this.window.length < this.windowsize) {
 				return this.window[0]
 			}
 			
 			let window_with_weights = []
+			let weights = []
 			
-			for (let i = 0; i < 5; i++) {
+			for (let i = 0; i < this.windowsize; i++) {
 				let weight = i + 1
+				weights.push(weight)
 				window_with_weights.push(this.window[i] * weight)
 			}
-			let weights = [1, 2, 3, 4, 5]
 			
-			let window_weighted_average = round(sum(window_with_weights) / sum(weights), 10)
-			return window_weighted_average
+			let window_weighted_average = sum(window_with_weights) / sum(weights)
+			return round(window_weighted_average, 10)
 		}
 	}
 	
@@ -69,6 +74,8 @@ namespace Filter {
 		}
 		
 		calculate(measurement: number) {
+			add_measurement(measurement)
+			
 			if (this.window.length < this.windowsize) {
 				return this.window[0]
 			}
@@ -76,14 +83,14 @@ namespace Filter {
 			let window_with_weights = []
 			let weights = []
 			
-			for (let i = 0; i < 5; i++) {
-				let weight = Math.pow((1 - this.alpha), 5 - i)
+			for (let i = 0; i < this.windowsize; i++) {
+				let weight = Math.pow((1 - this.alpha), this.windowsize - i)
 				window_with_weights.push(this.window[i] * weight)
 				weights.push(weight)
 			}
 			
-			let window_weighted_average = round(sum(window_with_weights) / sum(weights), 10)
-			return window_weighted_average
+			let window_weighted_average = window_with_weights) / sum(weights)
+			return round(window_weighted_average, 10)
 		}
 	}
 	
@@ -97,18 +104,9 @@ namespace Filter {
 			this.h = [4,5]
 		}
 		
-		add_measurment(measurement: number) {
-			this.current_value = this.calculate(measurement)
-			
-			let length = this.window.unshift(measurement)
-			if (length > this.windowsize) {
-				this.window.pop()
-			}
-		}
-		
-		calculate_with(measurement: number){
+		calculate(measurement: number){
 			if (this.window.length < this.windowsize) {
-				return this.window[0]
+				return measurement
 			}
 			
 			let input = this.window
@@ -120,36 +118,28 @@ namespace Filter {
 			
 			this.h = matadd(temp2, this.h)
 			
-			if (this.window.length < 8) {
-				return measurement
-			}
+			add_measurement(measurement)
+			
+			
+//			if (this.window.length < 8) {
+//				return measurement
+//			}
 			
 			return xhatn
 		}
 	}
 	
 	export class NLMS extends BaseFilter{
-		mu: number;
 		h: Array<number>;
 		
 		constructor(windowsize: number) {
 			super(windowsize);
-			this.mu = 1
 			this.h = [4,5]
 		}
 		
-		add_measurment(measurement: number) {
-			this.current_value = this.calculate(measurement)
-			
-			let length = this.window.unshift(measurement)
-			if (length > this.windowsize) {
-				this.window.pop()
-			}
-		}
-		
-		calculate_with(measurement: number){
+		calculate(measurement: number){
 			if (this.window.length < this.windowsize) {
-				return this.window[0]
+				return measurement
 			}
 			
 			let input = this.window
@@ -157,13 +147,14 @@ namespace Filter {
 			let en = measurement - xhatn
 			
 			let temp1 = mattimesnum(input, en)
-			let temp2 = mattimesnum(temp1, this.mu)
+			let temp2 = matdot(input, input)
+			let temp3 = vecdivnum(temp1,temp2)
 			
-			this.h = matadd(temp2, this.h)
+			this.h = matadd(temp3, this.h)
 			
-			if (this.window.length < 8) {
-				return measurement
-			}
+//			if (this.window.length < 8) {
+//				return measurement
+//			}
 			
 			return xhatn
 		}
@@ -260,6 +251,14 @@ namespace Filter {
 		let newarr = []
 		for (let i = 0; i < arr1.length; i++) {
 			newarr[i] = arr1[i] + num
+		}
+		return newarr
+	}
+	
+	function vecdivnum(arr: number[], num: number): number[] {
+		let newarr = []
+		for (let i = 0; i < arr.length; i++) {
+			newarr[i] = arr[i] / num
 		}
 		return newarr
 	}

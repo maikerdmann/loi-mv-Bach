@@ -1,81 +1,73 @@
-namespace Sensoren{
-    export class Ultraschallsensor{
-        buffer: Array<number>
-        num: number
-        typee: String
-        filter: Filter.BaseFilter;
+namespace Sensoren {
+
+    class BaseSensor{
+        live: number
+        filter: any;
 
         constructor(typee: String) {
-            this.typee = typee
-
-            switch (typee){
+            switch (typee) {
                 case 'MA':
                     this.filter = new Filter.MA(10)
+                    break
                 case 'WMA':
                     this.filter = new Filter.WMA(10)
+                    break
                 case 'EWMA':
-                    this.filter = new Filter.EWMA(10,0.5)
+                    this.filter = new Filter.EWMA(10, 0.5)
+                    break
                 case 'LMS':
-                    this.filter = new Filter.LMS(10,0.001)
+                    this.filter = new Filter.LMS(10, 0.001)
+                    break
                 case 'NLMS':
                     this.filter = new Filter.WMA(10)
+                    break
                 case 'KALMAN':
                     this.filter = new Filter.Kalman(10)
+                    break
             }
         }
 
-        get_entfernung(){
+        get_measurement() {
             return this.filter.current_value
         }
 
         get_real() {
-            return this.filter.window[0]
+            return this.live
         }
 
-        init(){
-            let messung = randint(300000, 400000) / 1000
-            this.filter.add_measurment(messung)
+        measure() {
+            return 0
         }
 
+        update() {
+            let measurement = this.measure()
+            this.live = measurement
+            this.filter.calculate(measurement)
+        }
     }
-    
-    export class SignalStaerke{
-        buffer: Array<number>
-        num: number
-        typee: String
-        filter: Filter.BaseFilter;
+
+
+    export class Ultraschallsensor extends BaseSensor {
         
         constructor(typee: String) {
-            this.typee = typee
-            
-            switch (typee){
-                case 'MA':
-                    this.filter = new Filter.MA(10)
-                case 'WMA':
-                    this.filter = new Filter.WMA(10)
-                case 'EWMA':
-                    this.filter = new Filter.EWMA(10)
-                case 'LMS':
-                    this.filter = new Filter.LMS(10)
-                case 'NLMS':
-                    this.filter = new Filter.WMA(10)
-                case 'KALMAN':
-                    this.filter = new Filter.Kalman(10)
-            }
+            super(typee)
         }
-        
-        get_entfernung(){
-            return this.filter.current_value
+
+        measure(){
+            let messung_ms = sonar.ping(DigitalPin.P8,DigitalPin.P9,PingUnit.MicroSeconds)
+            return messung_ms * 0.034 / 2
         }
-        
-        get_real() {
-            return this.filter.window[0]
+    }
+
+    export class SignalStaerke extends BaseSensor {
+
+        constructor(typee: String) {
+            super(typee)
         }
-        
-        init(){
-            let messung = randint(300000, 400000) / 1000
-            this.filter.add_measurment(messung)
+
+        measure(){
+            return 0
         }
-        
+
     }
 }
