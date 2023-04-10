@@ -1,15 +1,16 @@
 namespace LOI_MV {
-    
+
     let ultraschall_obj: any;
-    
+
     /**
      * initiert den ultraschall
      */
     //% blockId=loimvUltra
     //% block="ultra"
-    export function ultraschall() {
-        ultraschall_obj.get_entfernung()
+    export function ultraschall(): number {
+        return ultraschall_obj.get_measurement()
     }
+
     /**
      * Steuert die Antriebsmotoren mit den Parametern "Power" und "Lenkung".
      * Power gibt die Kraft von -10 bis 10 an, wobei negative Werte den Rückwärtsgang bedeuten
@@ -105,30 +106,69 @@ namespace LOI_MV {
         //    return 0
         //}
     }
-    
+
     /**
      * Fährt den Roboter korrekt hoch
      */
     //% blockId=loimvInit
-    //% block="init %kompass"
-    export function init(kompass: boolean): void {
+    //% block="init %kompass| calibrateUltraschall %ultra| filter %filter"
+    export function init(kompass: boolean, ultra:boolean, filter:Filterlist): void {
         let strip = neopixel.create(DigitalPin.P16, 8, NeoPixelMode.RGB)
         strip.showColor(neopixel.colors(NeoPixelColors.Red))
-        if (kompass){
+        if (kompass) {
             basic.pause(input.compassHeading())
-        }        
+        }
+
+
         I2C_LCD1602.LcdInit(0)
         antrieb(0, 0)
         I2C_LCD1602.ShowString("Landesolympiade", 0, 0)
         I2C_LCD1602.ShowString("Informatik MV", 1, 1)
+
+
+        ultraschall_obj = new Sensoren.Ultraschallsensor(DigitalPin.P8, DigitalPin.P0)
+        ultraschall_obj.set_filter(filter)
+
+        if (ultra) {
+            I2C_LCD1602.LcdInit(0)
+            I2C_LCD1602.ShowString("Entfernung 10cm", 0, 0)
+            I2C_LCD1602.ShowString("Press A", 1, 1)
+
+            let messung = true
+            let first: number
+            let second: number
+
+            while (messung) {
+                if (input.buttonIsPressed(Button.A)) {
+                    first = ultraschall_obj.measure()
+                    console.log("messeung" + first.toString())
+                    messung = false
+                }
+            }
+            I2C_LCD1602.LcdInit(0)
+            I2C_LCD1602.ShowString("Entfernung 20cm", 0, 0)
+            I2C_LCD1602.ShowString("Press B", 1, 1)
+
+            messung = true
+            while (messung) {
+                if (input.buttonIsPressed(Button.B)) {
+                    second = ultraschall_obj.measure()
+                    messung = false
+                }
+            }
+
+            ultraschall_obj.calibrate(first, second)
+
+            I2C_LCD1602.LcdInit(0)
+            I2C_LCD1602.ShowString("Ultraschalls", 0, 0)
+            I2C_LCD1602.ShowString("Kalibriert", 1, 1)
+        }
+
         basic.pause(300)
-        
-        ultraschall_obj = new Sensoren.Ultraschallsensor("MA")
-        
-        control.runInBackground(function(){
-            while (true){
-                ultraschall.init()
-                basic.showIcon(IconNames.Heart)
+        control.runInBackground(function () {
+            while (true) {
+                ultraschall_obj.update()
+                basic.pause(10)
             }
         })
     }
